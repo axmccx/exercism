@@ -4,29 +4,19 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &'a [&'a str]) -> HashSet
     let mut anagrams = HashSet::new();
 
     for &possible_anagram in possible_anagrams {
-        // if both lengths don't match, continue
-        // lowercase them both
-        // sort both and check for equality
+        if possible_anagram.len() != word.len() { continue }
+
+        if possible_anagram.to_lowercase() == word.to_lowercase() { continue }
+
+        let mut possible_anagram_vec: Vec<char> = possible_anagram.to_lowercase().chars().collect();
+        possible_anagram_vec.sort();
+
+        let mut word_vec: Vec<char> = word.to_lowercase().chars().collect();
+        word_vec.sort();
+
+        if possible_anagram_vec == word_vec {
+            anagrams.insert(possible_anagram);
+        }
     }
     anagrams
-
-
-    // let mut anagrams = HashSet::new();
-    //
-    // for &possible_anagram in possible_anagrams {
-    //     let mut letters_to_check: Vec<char> = possible_anagram.chars().collect();
-    //
-    //     for char_in_word in word.chars() {
-    //         if letters_to_check.contains(&char_in_word) {
-    //             if let Some(c) = letters_to_check.iter().position(|&v| v == char_in_word) {
-    //                 letters_to_check.remove(c);
-    //             }
-    //         }
-    //     }
-    //
-    //     if letters_to_check.is_empty() {
-    //         anagrams.insert(possible_anagram);
-    //     }
-    // }
-    // anagrams
 }
